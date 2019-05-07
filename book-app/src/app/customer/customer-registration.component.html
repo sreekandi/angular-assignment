@@ -1,0 +1,70 @@
+<div class="container" style="width:40%">
+    <h4 class="text-center">Registration Form</h4>
+    <!-- {{customer | json }} -->
+    {{customerForm.value | json}}
+    <form (ngSubmit)="registerNewCustomer()" #customerForm="ngForm">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" required [(ngModel)]="customer.name" name="customer_name"
+                #name="ngModel" [class.is-invalid]="name.touched && name.invalid" />
+        </div>
+        <div class="text-danger" [class.d-none]="name.valid || name.untouched">
+            Name is Required
+        </div>
+        <div class="form-group">
+            <label class="form-label">Email Id</label>
+            <input type="email" class="form-control" required name="email" [(ngModel)]="customer.email" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">ContactNumber</label>
+            <input type="number" class="form-control" required name="contact" 
+            [(ngModel)]="customer.contact" pattern="^\d{10}$" #phone="ngModel" 
+            [class.is-invalid]="phone.touched && phone.invalid" />
+
+            <div *ngIf="phone.errors && phone.touched">
+                <div class="text-danger" *ngIf="phone.errors?.required">
+                    phone No is Required
+                </div>
+                <div class="text-danger" *ngIf="phone.errors?.pattern">
+                    phone No is must be 10 digits
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" required name="password" [(ngModel)]="customer.password" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Gender</label>
+            <div class="form-check form-check-inline">
+                <input type="radio" name="gender" value="Male" [(ngModel)]="customer.gender"
+                    class="form-check-input" />Male
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="radio" name="gender" value="Female" [(ngModel)]="customer.gender"
+                    class="form-check-input" />Female
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="contact" class="form-control" name="address" [(ngModel)]="customer.address.line1" required />
+        </div>
+        <div class="form-group">
+            <label class="form-label">City</label>
+            <select class="form-control" required name="city" [(ngModel)]="customer.address.city">
+                <option value="srlect">---selectcity--</option>
+                <option value="ongole">ongole</option>
+                <option value="guntur">guntur</option>
+                <option value="vijavada">vijavada</option>
+                <option value="hyd">hygrabad</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">PostalCode</label>
+            <input type="number" class="form-control" required name="postalCode"
+                [(ngModel)]="customer.address.postalCode" />
+        </div>
+        <button type="submit" class="btn btn-block btn-success" [disabled]="customerForm.form.invalid">Register</button>
+    </form>
+</div>
